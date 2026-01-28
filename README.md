@@ -2,4 +2,6 @@
 
 This code repository currently contains code to clean two datasets, one for migration data sourced from https://hdr.undp.org/data-center/documentation-and-downloads and the other from https://www.un.org/development/desa/pd/content/international-migrant-stock.  These contain quality of life indicators for each country, and migration statistics (to and from) respectively.
 
+Our goal is to explain migration trends based on quality of life indicatiors--i.e. why people are immigrating/emmagrating from different reigions.  
+
 These data were cleaned so that they can both be queried by iso3 country code.  Moreover, all empty entries were set to np.nan.  They contain migration statistics for 8955 countries from 1990 to 2024 in increments of 5 years (data size is 15 x 8955), and 4 quality of life statistics for 195 countries across  the same set of years, except 2023 instead of 2024 (data size is 195 x 27).  These data are in tabular format with numeric entires for quantities, and categorical data for countries and reigion.
