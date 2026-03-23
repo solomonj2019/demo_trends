@@ -1,17 +1,17 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Immigrant’s Dream of the Hillsides</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-  </head>
-  <body>
-    <header>
-      <h1 class="title">Immigrant’s Dream of the Hillsides</h1>
-    </header>
-    <main class="wrapper">
-  <div class="left-column">
-    <div class="left-column-content">
+<head>
+  <meta charset="utf-8" />
+  <title>An Immigrant's Dream of the Hillsides</title>
+  <link rel = "stylesheet" href = "styles.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+
+  <div class = "container">
+    <div class = "poem-panel">
+      <h2>An Immigrant's Dream of The Hillsides</h2>
+      <div class="left-column-content">
       <div class="filler-verse"></div>
 
       <ul class="verse" id="verse1">
@@ -67,55 +67,33 @@
 
       <div class="filler-verse"></div>
     </div>
-  </div>
-        
-
-      <div class="right-column">
-        <svg id="svg"></svg>
-      </div>
-    </main>
-    <footer>
+  
+    <div class="button">
       <button class="arrow-button" id="backward-button">◄</button>
       <button class="arrow-button" id="forward-button">►</button>
-    </footer>
-    <script src="main.js"></script>
-  </body>
-</html> -->
+   </div>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Simple Map</title>
-  <link rel = "stylesheet" href = "styles.css" />
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-</head>
-<body>
-
-  <div class = "container">
-    <div class = "poem-panel">
-      <h2>Poem</h2>
-      <p>
-        Standing atop the rolling hills,<br>
-        I witnessed the rise and fall of the Sun.<br>
-        So swiftly risen and faultlessly set,<br>
-        Yet the brilliance forever remained,<br>
-        Emanating over Her whose beauty<br>
-        Was and is ceaseless and captivating—<br>
-        Even when the sky fell black.
-      </p>
     </div>
-
     <div class = "map-panel">
       <svg width="1000" height="600"></svg>
     </div>
 
     <div class = "info-panel" id = "info">
-      <h3 id = "country-name">Hover over a country</h3>
-      <svg id = "info-chart" width="500" height="160"></svg>
+      <h3 id = "country-name">Hover Over a Country to See Quality of Life Metrics</h3>
+      <svg id = "info-chart" width="750" height="160"></svg>
+    </div>
+
+    <div class="text-panel">
+       <li class="line" id="line1"> <span class="good-news"></span>In 2024, 934,727 migrants moved from Honduras to the United States searching for the rolling hills... </span></li>
+      
+      <div class="image">
+          <img id="hill_img" src="assets/hillside.jpg" alt="hill_img" />
+      </div>
+
+      <li class="line" id="line3"> <span class="bad-news">  6,850 have been apprehended by ICE, including deportation. </span></li>
     </div>
   </div>
+
   <script src="main.js"></script>
 </body>
 </html>
