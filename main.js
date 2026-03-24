@@ -108,7 +108,7 @@ function updateInfoChart(country) {
         .enter()
         .append("text")
         //Michael: scale change position for the text (again chatgpt for syntax)
-        .attr("x", (d, i) => 220+(i == 0 ? + xScale(d.value*100):xScale(d.value)))
+        .attr("x", (d, i) => 255+(i == 0 ? xScale(d.value*100):xScale(d.value)))
         .attr("y", (d, i) => 35 + i * 45)
         .text(d => d.value ? d.value.toFixed(2) : "No Data");
     }
