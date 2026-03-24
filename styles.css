@@ -54,6 +54,7 @@ body {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   background: rgb(191, 241, 251);
+  position: relative;
   border: 1px solid #ccc;
   display: flex;
   justify-content: center;
@@ -61,7 +62,36 @@ body {
   overflow: hidden;
 
 }
+.legend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 180px;
+  font-size: 12px;
+}
+.legend-title {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
 
+.legend-bar{
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #cfe8f3,
+    #7fb3d5,
+    #2874a6,
+    #1b4f72,
+    #0b2e59
+  );
+}
+
+.legend-labels{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
 .verse {
   list-style-type: none;
   padding: 0px;
