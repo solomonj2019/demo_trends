@@ -47,6 +47,14 @@ body {
   padding-bottom: 50px;
 }
 
+.active-verse {
+  color: #ff0000;
+}
+
+.active-line {
+  color: rgb(255, 0, 0);
+}
+
 .text-panel > * {
   max-width: 220px;   
   width: 100%;
@@ -147,7 +155,7 @@ body {
   justify-content: center;
   flex-direction: column;
   padding: 3rem 3rem;
-  overflow-y: auto;
+  overflow-y: hidden;
   border: 4px solid #001f3f;
   border-radius: 12px;
   box-shadow:
@@ -157,6 +165,8 @@ body {
 }
 
 .left-column-content {
-  overflow-y: auto;             
+  overflow-y: auto;
+  height: 100%;       
+  width: 100%;         
 }
 
