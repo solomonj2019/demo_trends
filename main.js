@@ -254,11 +254,18 @@ let keyframes = [
         bcg:"olive",
         //TODO: Implement functionality
         badText:"Click on a country to see ICE deportation statistics"
-      }
+      },
+      updateTxt: `
+        <ul>
+          <li>Deportation data sourced from https://www.ice.gov/statistics</li>
+          <li>Does not include deportations by other federal agencies.</li>
+          <li>Migration data sourced from https://hdr.undp.org/data-center</li>
+          <li>Quality of life metrics sourced from https://www.un.org/development/desa. </li>
+        </ul>
+      `
 
     }
 ]
-
 
 
 function updateTextPannel({goodText, img, textclass, bcg, firstImg, badText}){
@@ -304,7 +311,6 @@ function updateTextPannel({goodText, img, textclass, bcg, firstImg, badText}){
 
     }
 
-    
 
     if (bcg !== undefined) {
         d3.select(".text-panel")
@@ -381,6 +387,10 @@ function drawKeyframe(kfi) {
         // If there is we call it like this
         kf.svgUpdate();
     }
+
+    if(kf.updateTxt){
+      dataInfoUpdate(kf.updateTxt);
+    }
 }
 
 
@@ -436,7 +446,12 @@ function unhighlightCountry(country){
   .attr("fill", d => d.properties.originalColor)
   .duration(1000);
 
+}
 
+//update text in bottom right
+function dataInfoUpdate(text) {
+  const p = document.getElementById("data-info-panel");
+  p.innerHTML = text;
 }
 
 

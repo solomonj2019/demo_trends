@@ -130,7 +130,7 @@ body {
 }
 
 .info-panel {
-  grid-column: 1 / 4;
+  grid-column: 1 / 3;
   grid-row: 2 / 3;
   background: beige;
   /* border: 1px solid #ccc; */
@@ -144,6 +144,20 @@ body {
     0 0 0 2px #ffffff,   
     0 4px 10px rgba(0,0,0,0.2); 
 }
+
+.data-info-panel {
+  grid-column: 3/4; 
+  grid-row: 2/3;  
+  background: beige;
+  padding: 16px;
+  border: 4px solid #001f3f;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 4px 10px rgba(0,0,0,0.2);
+  overflow: auto;
+}
+
 
 
 
