@@ -187,7 +187,7 @@ let keyframes = [
       textUpdate: {
         bcg: "maroon",
         img:"assets/imgBad.png",
-        badText: "Over 50,000 were deported by ICE alone"
+        badText: "Over 50,000 were deported by ICE alone in 2025"
       },
       svgUpdate: () => highlightUSA("maroon"),
     },
@@ -254,15 +254,14 @@ let keyframes = [
         img:"assets/hillside.png",
         firstImg:"true",
         bcg:"olive",
-        //TODO: Implement functionality
         badText:"Hover on a country to see ICE deportation statistics"
       },
       updateTxt: `
         <ul>
-          <li>Deportation data sourced from https://www.ice.gov/statistics</li>
+          <li>Deportation data sourced from https://www.ice.gov/statistics and only includes FY 2025</li>
           <li>Does not include deportations by other federal agencies.</li>
-          <li>Migration data sourced from https://hdr.undp.org/data-center</li>
-          <li>Quality of life metrics sourced from https://www.un.org/development/desa. </li>
+          <li>Migration data sourced from https://hdr.undp.org/data-center and only includes FY 2024</li>
+          <li>Quality of life metrics sourced from https://www.un.org/development/desa and only includes FY 2024 </li>
         </ul>
       `
 
