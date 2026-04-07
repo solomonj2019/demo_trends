@@ -79,7 +79,14 @@ let keyframes = [
         badText: "In 2025, 6,850 have been apprehended by ICE, including deportation.",
         bcg: "maroon"
       },
-      svgUpdate: () => highlightUSA("Red")
+      svgUpdate: () => {
+        highlightUSA("Red");
+        const hnd = geoData.features.find(d => d.properties.iso_a3 === "HND");
+        if (hnd) {
+          updateInfoChart(hnd);
+          drawDeportationFlow(hnd);
+        }
+      }
     },
 
     //back to good (delete text and change to good color)
@@ -88,12 +95,17 @@ let keyframes = [
         activeLines: [1],
         textUpdate:{
           firstImg:true,
-          img: "assets/hillside.png", 
+          img: "assets/hillside.png",
           goodText: "In 2024, 1,298,936 migrants from Guatemala travelled to the United States searching for a better quality of life...",
           bcg: "beige",
           badText: ""
         },
         svgUpdate: () => {
+          svg.selectAll(".flow-group").remove();
+          selectedFlowGroup = null;
+          resetDeptText();
+          infoChart.selectAll("*").remove();
+          countryTitle.text("Hover Over a Country to See Quality of Life Metrics");
           unhighlightCountry("HND");
           highlightCountry("GTM", "olive");
           unhighlightUSA();
@@ -130,7 +142,14 @@ let keyframes = [
           bcg: "maroon",
           badText: "In 2025, 11,522 were deported by ICE"
         },
-        svgUpdate: () => highlightUSA("Red")
+        svgUpdate: () => {
+          highlightUSA("Red");
+          const gtm = geoData.features.find(d => d.properties.iso_a3 === "GTM");
+          if (gtm) {
+            updateInfoChart(gtm);
+            drawDeportationFlow(gtm);
+          }
+        }
     },
     //TODO: add info for all countries
     {
@@ -144,9 +163,14 @@ let keyframes = [
         bcg:"beige"
       },
       svgUpdate: () => {
+        svg.selectAll(".flow-group").remove();
+        selectedFlowGroup = null;
+        resetDeptText();
+        infoChart.selectAll("*").remove();
+        countryTitle.text("Hover Over a Country to See Quality of Life Metrics");
         highlightUSA("gold")
         unhighlightCountry("GTM")
-        highlightCountry("ARG", "olive");
+        highlightCountry("ARG", "olive");   //SHOWING ALL COUNTRIES IN CENTRAL AND SOUTH AMERICA, AS WELL AS CARIBBEAN
         highlightCountry("BOL", "olive");
         highlightCountry("BRA", "olive");
         highlightCountry("CHL", "olive");
@@ -189,13 +213,60 @@ let keyframes = [
         img:"assets/imgBad.png",
         badText: "Over 50,000 were deported by ICE alone in 2025"
       },
-      svgUpdate: () => highlightUSA("maroon"),
+      svgUpdate: () => {
+        highlightUSA("maroon");
+        const regionalCodes = ["MEX","GTM","HND","SLV","NIC","CRI","PAN","COL","VEN","ECU","PER","BOL","BRA","ARG","CHL"];
+        const usaFeature = geoData.features.find(d => d.properties.iso_a3 === "USA");
+        if (selectedFlowGroup) selectedFlowGroup.remove();
+        selectedFlowGroup = svg.append("g").attr("class", "flow-group"); //Trying to replicate effects from drawDeportationFlow but for multiple arrows at once, and bx to show bubble.
+        if (usaFeature) {
+          const [x1, y1] = projection(d3.geoCentroid(usaFeature));
+          let mxSum = 0, mySum = 0, count = 0;
+          regionalCodes.forEach(code => {
+            const feat = geoData.features.find(d => d.properties.iso_a3 === code);
+            if (!feat) return;
+            const [x2, y2] = projection(d3.geoCentroid(feat));
+            const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 - 80;
+            mxSum += mx; mySum += my; count++;
+            selectedFlowGroup.append("path")
+              .attr("d", `M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`)
+              .attr("fill", "none")
+              .attr("stroke", "crimson")
+              .attr("stroke-width", 3)
+              .attr("marker-end", "url(#arrowhead)");
+          });
+          if (count > 0) {
+            const bx = mxSum / count, by = mySum / count - 25;  //bubble position above the arrows
+            selectedFlowGroup.append("rect")
+              .attr("x", bx - 70).attr("y", by - 22)
+              .attr("width", 140).attr("height", 30)
+              .attr("rx", 8).attr("fill", "white")
+              .attr("stroke", "crimson").attr("opacity", 0.9);
+            selectedFlowGroup.append("text")
+              .attr("x", bx).attr("y", by - 2)
+              .attr("text-anchor", "middle")
+              .attr("font-size", "14px").attr("font-weight", "bold")
+              .attr("fill", "crimson").text("50,000+");
+          }
+        }
+        svg.selectAll("path")
+          .attr("stroke-width", 1)
+          .attr("stroke", "black");
+        countryTitle.text("Central & South American Immigrants"); //New section added just for the last fourth verse.
+        infoChart.selectAll("*").remove(); 
+        deportInfoUpdate(`<ul><li><strong>Central & South America</strong></li><li>ICE removals/deportations: 50,000+ (FY 2025)</li><li>Flows shown from USA to origin countries</li></ul>`);
+      },
     },
 
     {
       activeVerse:5,
       activeLines:[1, 2, 3, 4, 5, 6],
       svgUpdate: () => {
+        svg.selectAll(".flow-group").remove();
+        selectedFlowGroup = null;
+        resetDeptText();
+        infoChart.selectAll("*").remove();
+        countryTitle.text("Hover Over a Country to See Quality of Life Metrics");
         unhighlightUSA();
         highlightCountry("DOM", "olive");
         highlightCountry("GRD", "olive");
