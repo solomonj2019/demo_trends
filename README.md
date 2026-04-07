@@ -11,3 +11,5 @@ Code can be run locally using the live server plugin of vsCode.  To do so, one s
 ### AI Statements and Acknowledgments :
 
 Michael: AI was used primarily for figuring out the .js code.  Here, I used it to figure out syntax and also how to "modularize" the code written before so that it was structured similar to HW4 (i.e. broken up into functions).  Any instances of signifcant usage are tagged in the code.  I also used it more minorly for other bug fixes and syntax issues throughout.  I based the index.html file off of the structure of HW4.
+
+Tim: AI was used primarily to assist with svg updates in .js code. I was able to bug fix UI changes efficiently, and used it greatly in adding a new section for Central and South America as a whole, which was very experimental and is done outside of drawDeportationFlow to account for many arrows.
