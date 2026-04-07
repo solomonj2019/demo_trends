@@ -574,6 +574,7 @@ async function initalize_map_2(){
         updateInfoChart(d);
         drawDeportationFlow(d);
       })
+      //Michael: used AI to figure out how to remove arrow
       .on("mouseout", function(event, d){
            if (selectedFlowGroup) {
       selectedFlowGroup.remove();
@@ -702,7 +703,7 @@ function drawDeportationFlow(countryFeature) {
     </ul>
   `);
 
-  //used AI to correct error coming from this line
+  //Michael: used AI to correct error coming from this line
 svg.selectAll("path")
   .attr("stroke-width", d => d?.properties?.iso_a3 === iso3 ? 2.5 : 1)
   .attr("stroke", d => d?.properties?.iso_a3 === iso3 ? "black" : "black");
