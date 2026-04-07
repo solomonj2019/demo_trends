@@ -455,6 +455,11 @@ function dataInfoUpdate(text) {
   p.innerHTML = text;
 }
 
+function deportInfoUpdate(text) {
+  const p = document.getElementById("dp");
+  p.innerHTML = text;
+}
+
 
 function highlightUSA(color) {
   const us = svg.selectAll("path")
@@ -568,7 +573,15 @@ async function initalize_map_2(){
       .on("mouseover", function(event, d) {
         updateInfoChart(d);
         drawDeportationFlow(d);
-      });
+      })
+      .on("mouseout", function(event, d){
+           if (selectedFlowGroup) {
+      selectedFlowGroup.remove();
+     selectedFlowGroup = null;
+     resetDeptText();}
+});
+      
+
 
           const us = svg.selectAll("path")
         .filter(d => d.properties.iso_a3 === "USA");
@@ -681,7 +694,7 @@ function drawDeportationFlow(countryFeature) {
     .text(deportInfo.removals.toLocaleString());
 
   countryTitle.text(countryFeature.properties.name);
-  dataInfoUpdate(`
+  deportInfoUpdate(`
     <ul>
       <li><strong>${deportInfo.country}</strong></li>
       <li>ICE removals/deportations: ${deportInfo.removals.toLocaleString()}</li>
@@ -689,15 +702,19 @@ function drawDeportationFlow(countryFeature) {
     </ul>
   `);
 
-  svg.selectAll("path")
-    .attr("stroke-width", d => d.properties.iso_a3 === iso3 ? 2.5 : 1)
-    .attr("stroke", d => d.properties.iso_a3 === iso3 ? "crimson" : "black");
-
+  //used AI to correct error coming from this line
+svg.selectAll("path")
+  .attr("stroke-width", d => d?.properties?.iso_a3 === iso3 ? 2.5 : 1)
+  .attr("stroke", d => d?.properties?.iso_a3 === iso3 ? "black" : "black");
   }
 
 
 function initalizePoem(){
     drawKeyframe(keyframeIndex)
+}
+
+function resetDeptText(){
+    deportInfoUpdate("");
 }
 
 function initializeTextPanel() {
