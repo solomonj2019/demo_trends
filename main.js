@@ -255,7 +255,7 @@ let keyframes = [
         firstImg:"true",
         bcg:"olive",
         //TODO: Implement functionality
-        badText:"Click on a country to see ICE deportation statistics"
+        badText:"Hover on a country to see ICE deportation statistics"
       },
       updateTxt: `
         <ul>
