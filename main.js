@@ -1,7 +1,9 @@
 const svg = d3.select("svg");
 const infoChart = d3.select("#info-chart");
 const countryTitle = d3.select("#country-name");
+let deportationMap = new Map();
 let geoData, projection, color;
+let selectedFlowGroup = null;
 
 
 
@@ -480,9 +482,11 @@ let origina
 async function initalize_map_2(){
 
   //Michael: I had to use chatGPT for this change
-  const [geoData_infcn, csvData] = await Promise.all([
+  const [geoData_infcn, csvData, deportationData] = await Promise.all([
     d3.json("custom.geo.json"),
-    d3.csv("data_for_vis/qol.csv")
+    d3.csv("data_for_vis/qol.csv"),
+    d3.csv("data_for_vis/deportation.csv")
+    //d3.csv("data_for_vis/migration.csv")
   ]);
 
   geoData = geoData_infcn
@@ -497,6 +501,18 @@ async function initalize_map_2(){
             eys: +d.eys_2023
           }
       ])
+  );
+
+  //deportation map
+  deportationMap = new Map(
+    deportationData.map(d => [
+      d.iso3,
+      {
+        country: d["Country of Citizenship"],
+        removals: +d.Removals
+        
+      }
+    ])
   );
 
   geoData.features.forEach(d => {
@@ -519,6 +535,19 @@ async function initalize_map_2(){
       .center([-75, 0]);
 
     const path = d3.geoPath().projection(projection);
+    //ai used by pablo  
+    svg.append("defs")
+    .append("marker")
+    .attr("id", "arrowhead")
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 10)
+    .attr("refY", 0)
+    .attr("markerWidth", 7)
+    .attr("markerHeight", 7)
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M0,-5L10,0L0,5")
+    .attr("fill", "crimson");
 
       //needed to use AI to figure this piece out
     svg.selectAll("path")
@@ -539,6 +568,7 @@ async function initalize_map_2(){
       .attr("stroke", "black")
       .on("mouseover", function(event, d) {
         updateInfoChart(d);
+        drawDeportationFlow(d);
       });
 
           const us = svg.selectAll("path")
@@ -598,7 +628,73 @@ function updateInfoChart(country) {
     }
 
 
+//utilized AI to create arrows
+function drawDeportationFlow(countryFeature) {
+  const iso3 = countryFeature.properties.iso_a3;
+  const deportInfo = deportationMap.get(iso3);
 
+  if (!deportInfo) {
+    countryTitle.text(`${countryFeature.properties.name} (No deportation data)`);
+    if (selectedFlowGroup) selectedFlowGroup.remove();
+    return;
+  }
+
+  if (selectedFlowGroup) selectedFlowGroup.remove();
+
+  const usaFeature = geoData.features.find(d => d.properties.iso_a3 === "USA");
+  if (!usaFeature) return;
+
+  const usaCoords = d3.geoCentroid(usaFeature);
+  const targetCoords = d3.geoCentroid(countryFeature);
+
+  const [x1, y1] = projection(usaCoords);
+  const [x2, y2] = projection(targetCoords);
+
+  const mx = (x1 + x2) / 2;
+  const my = (y1 + y2) / 2 - 80;
+
+  selectedFlowGroup = svg.append("g").attr("class", "flow-group");
+
+  selectedFlowGroup.append("path")
+    .attr("d", `M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`)
+    .attr("fill", "none")
+    .attr("stroke", "crimson")
+    .attr("stroke-width", 3)
+    .attr("marker-end", "url(#arrowhead)");
+
+  selectedFlowGroup.append("rect")
+    .attr("x", mx - 60)
+    .attr("y", my - 22)
+    .attr("width", 120)
+    .attr("height", 30)
+    .attr("rx", 8)
+    .attr("fill", "white")
+    .attr("stroke", "crimson")
+    .attr("opacity", 0.9);
+
+  selectedFlowGroup.append("text")
+    .attr("x", mx)
+    .attr("y", my - 2)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "14px")
+    .attr("font-weight", "bold")
+    .attr("fill", "crimson")
+    .text(deportInfo.removals.toLocaleString());
+
+  countryTitle.text(countryFeature.properties.name);
+  dataInfoUpdate(`
+    <ul>
+      <li><strong>${deportInfo.country}</strong></li>
+      <li>ICE removals/deportations: ${deportInfo.removals.toLocaleString()}</li>
+      <li>Flow shown from USA to selected country</li>
+    </ul>
+  `);
+
+  svg.selectAll("path")
+    .attr("stroke-width", d => d.properties.iso_a3 === iso3 ? 2.5 : 1)
+    .attr("stroke", d => d.properties.iso_a3 === iso3 ? "crimson" : "black");
+
+  }
 
 
 function initalizePoem(){
