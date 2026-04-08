@@ -54,10 +54,10 @@ let keyframes = [
       activeLines: [4, 5],
       textUpdate:{
         firstImg: false,
-        bcg: "maroon",
-        img:"assets/hillside.png",
+        bcg: "#D8A7A7",
+        img:"assets/ice.png",
         badText: "",
-        bcg:"maroon"
+        bcg:"#D8A7A7"
       }
     },
     { //change photo
@@ -65,9 +65,9 @@ let keyframes = [
       activeLines: [6],
       textUpdate: {
         firstImg: true,
-        img: "assets/imgBad.png",
+        img: "assets/ice.png",
         badText: "",
-        bcg:"maroon"
+        bcg:"#D8A7A7"
       }
     },
     { //change text
@@ -75,9 +75,9 @@ let keyframes = [
       activeLines: [7],
       textUpdate: {
         firstImg: false,
-        img: "assets/imgBad.png",
+        img: "assets/ice.png",
         badText: "In 2025, 6,850 have been apprehended by ICE, including deportation.",
-        bcg: "maroon"
+        bcg: "#D8A7A7"
       },
       svgUpdate: () => {
         highlightUSA("Red");
@@ -95,7 +95,7 @@ let keyframes = [
         activeLines: [1],
         textUpdate:{
           firstImg:true,
-          img: "assets/hillside.png",
+          img: "assets/protest.png",
           goodText: "In 2024, 1,298,936 migrants from Guatemala travelled to the United States searching for a better quality of life...",
           bcg: "beige",
           badText: ""
@@ -116,8 +116,8 @@ let keyframes = [
         activeLines: [2],
         textUpdate:{
           firstImg:false,
-          img: "assets/hillside.png", 
-          bcg: "maroon",
+          img: "assets/protest.png", 
+          bcg: "#D8A7A7",
           badText: ""
         }
     },
@@ -127,8 +127,8 @@ let keyframes = [
       activeLines: [3, 4],
         textUpdate:{
           firstImg: true,
-          img: "assets/imgBad.png", 
-          bcg: "maroon",
+          img: "assets/court.png", 
+          bcg: "#D8A7A7",
           badText: ""
         }
     },
@@ -138,8 +138,8 @@ let keyframes = [
       activeLines:[5, 6, 7],
       textUpdate:{
           firstImg:false,
-          img: "assets/imgBad.png", 
-          bcg: "maroon",
+          img: "assets/court.png", 
+          bcg: "#D8A7A7",
           badText: "In 2025, 11,522 were deported by ICE"
         },
         svgUpdate: () => {
@@ -156,7 +156,7 @@ let keyframes = [
       activeVerse:4,
       activeLines:[1, 2, 3, 4, 5],
       textUpdate:{
-        img:"assets/hillside.png",
+        img:"assets/protest.png",
         firstImg: true,
         goodText: "In 2024, millions of Central and South American Immigrants travelled to the United States in search of a better life",
         badText: "",
@@ -209,12 +209,12 @@ let keyframes = [
       activeVerse:4,
       activeLines:[6, 7],
       textUpdate: {
-        bcg: "maroon",
-        img:"assets/imgBad.png",
+        bcg: "#D8A7A7",
+        img:"assets/protest.png",
         badText: "Over 50,000 were deported by ICE alone in 2025"
       },
       svgUpdate: () => {
-        highlightUSA("maroon");
+        highlightUSA("#d54848");
         const regionalCodes = ["MEX","GTM","HND","SLV","NIC","CRI","PAN","COL","VEN","ECU","PER","BOL","BRA","ARG","CHL"];
         const usaFeature = geoData.features.find(d => d.properties.iso_a3 === "USA");
         if (selectedFlowGroup) selectedFlowGroup.remove();
@@ -313,7 +313,7 @@ let keyframes = [
       textUpdate:{
         goodText:"",
         badText:"",
-        img:"assets/imgBad.png",
+        img:"assets/protest.png",
         firstImg: false
       }
     },
@@ -322,9 +322,9 @@ let keyframes = [
       activeLines:[7, 8],
       textUpdate:{
         goodText: "Immigrants deserve to not live in fear of Ice",
-        img:"assets/hillside.png",
+        img:"assets/cemerony.png",
         firstImg:"true",
-        bcg:"olive",
+        bcg:"#82b395",
         badText:"Hover on a country to see ICE deportation statistics"
       },
       updateTxt: `
@@ -440,7 +440,6 @@ function resetAllColors(){
 
 //from hw 4
 function drawKeyframe(kfi) {
-    console.log("Drawing keyframe", kfi, keyframes[kfi]);
     let kf = keyframes[kfi];
 
     resetActiveLines();
